@@ -39,8 +39,6 @@ def update_counter2():
 
 @application.route("/form_submission", methods=["POST"])
 def form_submission():
-    requestObj = request.form
-    print(request)
     data = \
         {
             "userInput": sanitize(request.form["userInput"])

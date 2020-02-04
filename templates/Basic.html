@@ -32,7 +32,16 @@ function update_counter2()
 {
     // JQuery AJAX load function updates a selected element with the returned contents of a request
     // a useful function for when you want to update part of the page without needing to send any information back to the server
-    $("#counter2").load("update_counter2");
+    $("#counter2").load("update_counter2", function(data, status){
+        if(status == "success")
+            {
+                // update the text for the specific html element based on tag
+                $("#counter2").text("Counter 2: " + data);
+            }
+
+    });
+    // could also be super simple as which would put the responseText straight into that object.  This is a little bit limiting though.
+    //$("#counter2").load("update_counter2");
 }
 
 function form_submission()

@@ -34,7 +34,7 @@ def home():
 def update_counter2():
     global counter2
     counter2 += 1
-    return f"Counter 2: {str(counter2)}"
+    return str(counter2)
 
 
 @application.route("/form_submission", methods=["POST"])

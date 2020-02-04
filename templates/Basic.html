@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+<body>
+    <h1>Flask JQuery AJAX clicker demo</h1>
+    <h3>Reload the page to increment counter1</h3>
+    <h4>Counter 1: {{data["counter1"]}}</h4>
+    <br>
+
+    <h3>click the button to increment counter2</h3>
+    <!--make sure to id the part of the html page we want to async reload-->
+    <h4 id="counter2" style="margin: 0;">Counter 2: {{data["counter2"]}}</h4>
+    <!--onclick="functionNameInJSCode()" is what we need to run the js function-->
+    <button type="button" onclick="update_counter2()">Update Counter 2</button>
+    <br><br>
+
+
+    <h2>HTML Forms</h2>
+    <!-- onsubmit event.preventDefault() stops this from making a request and instead calls the form_submission() function -->
+    <form id="userInputForm" onsubmit="event.preventDefault(); form_submission();">
+      Type something and hit submit to see it below:<br>
+      <input type="text" name="userInput" id="userInput" placeholder="insert text here">
+      <input type="submit" value="Submit">
+    </form>
+    <p id="formOutput"></p>
+
+<script>
+// function that gets called by the button's above onclick action
+function update_counter2()
+{
+    // JQuery AJAX load function updates a selected element with the returned contents of a request
+    // a useful function for when you want to update part of the page without needing to send any information back to the server
+    $("#counter2").load("update_counter2");
+}
+
+function form_submission()
+{
+    // perform async AJAX Request
+    $.ajax(
+        // put all of the info about the request into JSON
+        {
+            data:
+            {
+                // get the userInput from the form based on id, only get the value
+                userInput: $("#userInput").val()
+            },
+            // specify the method and url
+            type: "POST",
+            url: "form_submission"
+            
+        // .done specifies action to take when we get the response.  Positional arguments for anonymous function are:
+        // data as plain text and status as "success", or "done"
+        }).done(function(data, status)
+        {
+            if(status == "success")
+            {
+                // update the text for the specific html element based on tag
+                $("#formOutput").text(data.userInput);
+                $("#userInput").val(data.userInput);
+            }
+        })
+}
+</script>
+</body>
+</html>
